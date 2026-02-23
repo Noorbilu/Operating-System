@@ -3,10 +3,10 @@
 
 int main() {
     int n, tq;
-    int at[MAX], bt[MAX], rt[MAX];      // arrival, burst, remaining
-    int ct[MAX], tat[MAX], wt[MAX];     // completion, turnaround, waiting
-    int q[MAX], front = 0, rear = 0;    // ready queue
-    int visited[MAX] = {0};             // একবার queue-তে গেছে কি না
+    int at[MAX], bt[MAX], rt[MAX];     
+    int ct[MAX], tat[MAX], wt[MAX];     
+    int q[MAX], front = 0, rear = 0;    
+    int visited[MAX] = {0};            
 
     int time = 0, completed = 0;
     float sumWT = 0, sumTAT = 0;
@@ -20,13 +20,13 @@ int main() {
         scanf("%d", &at[i]);
         printf("Burst Time: ");
         scanf("%d", &bt[i]);
-        rt[i] = bt[i];      // শুরুতে remaining = burst
+        rt[i] = bt[i];     
     }
 
     printf("\nEnter Time Quantum: ");
     scanf("%d", &tq);
 
-    time = 0;     // time = 0 এ যে সব process এসে গেছে, তাদের queue-তে দিই
+    time = 0;     
     for (int i = 0; i < n; i++) {
         if (at[i] <= time && visited[i] == 0) {
             q[rear++] = i;
@@ -34,9 +34,9 @@ int main() {
         }
     }
 
-    while (completed < n) { // Round Robin simulation
+    while (completed < n) { 
 
-        if (front == rear) {        // ready queue ফাঁকা → CPU idle → time বাড়াই, নতুন arrival ধরে নেই
+        if (front == rear) {        
             time++;
             for (int i = 0; i < n; i++) {
                 if (at[i] <= time && visited[i] == 0) {
@@ -47,26 +47,26 @@ int main() {
             continue;
         }
 
-        int idx = q[front++];         // queue-এর প্রথম process-টা নেই
+        int idx = q[front++];         
 
-        if (rt[idx] > tq) {        // queue-এর প্রথম process-টা নেই
+        if (rt[idx] > tq) {        
             time   += tq;
             rt[idx] -= tq;
         } else {
             time    += rt[idx];
             rt[idx]  = 0;
-            ct[idx]  = time;   // finish time
+            ct[idx]  = time;  
             completed++;
         }
 
-        for (int j = 0; j < n; j++) {        // এই সময়ের মধ্যে যে সব নতুন process এসে গেছে, তাদের আগে queue-তে দিই
+        for (int j = 0; j < n; j++) {       
             if (at[j] <= time && visited[j] == 0) {
                 q[rear++] = j;
                 visited[j] = 1;
             }
         }
 
-        if (rt[idx] > 0) {         // যদি কাজ বাকি থাকে, তখনই আবার queue-র শেষে পাঠাই
+        if (rt[idx] > 0) {         
             q[rear++] = idx;
         }
     }
