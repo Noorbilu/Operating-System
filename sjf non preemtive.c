@@ -40,7 +40,7 @@ int main() {
         done++;
     }
 
-    printf("\nP\tAT\tBT\tCT\tWT\tTAT\n");   
+    printf("\nP\tAT\tBT\tCT\tWT\tTAT\n");   // CT যোগ করা হয়েছে
     for (i = 0; i < n; i++)
         printf("P%d\t%d\t%d\t%d\t%d\t%d\n", i, at[i], bt[i], ct[i], wt[i], tat[i]);  // ct[i] যোগ করা হয়েছে
 

@@ -2,7 +2,7 @@
 
 int main() {
     int n, i,time = 0, done = 0;
-    int at[20], bt[20], rt[20], wt[20], tat[20], ct[20];  
+    int at[20], bt[20], rt[20], wt[20], tat[20], ct[20];  // ct যোগ করা হয়েছে
     float sumWT = 0, sumTAT = 0;
 
     printf("Enter number of processes: ");
@@ -34,7 +34,7 @@ int main() {
 
         if (rt[idx] == 0) {
             done++;
-            ct[idx]  = time;              
+            ct[idx]  = time;              // Completion time যোগ করা হয়েছে
             tat[idx] = time - at[idx];
             wt[idx]  = tat[idx] - bt[idx];
             sumWT   += wt[idx];
@@ -42,7 +42,7 @@ int main() {
         }
     }
 
-    printf("\nP\tAT\tBT\tCT\tWT\tTAT\n");  
+    printf("\nP\tAT\tBT\tCT\tWT\tTAT\n");   // CT header যোগ
     for (i = 0; i < n; i++)
         printf("P%d\t%d\t%d\t%d\t%d\t%d\n", i, at[i], bt[i], ct[i], wt[i], tat[i]);  // ct[i] print
 
