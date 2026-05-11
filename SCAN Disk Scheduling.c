@@ -32,21 +32,18 @@ int main() {
 
     printf("\nTracks\tDifference\n");
 
-    // RIGHT SIDE FIRST (SCAN main direction)
+    // move right
     for(j = i; j < n-1; j++) {
         d = t[j+1] - t[j];
-        printf("%d\t%d\n", t[j], d);
         total += d;
+        printf("%d\t%d\n", t[j], d);
     }
 
-    // LAST RIGHT MOVE
-    printf("%d\n", t[n-1]);
-
-    // LEFT SIDE
+    // move left
     for(j = n-1; j > 0; j--) {
         d = t[j] - t[j-1];
-        printf("%d\t%d\n", t[j], d);
         total += d;
+        printf("%d\t%d\n", t[j], d);
     }
 
     avg = (float) total / (n - 1);
