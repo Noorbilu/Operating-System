@@ -2,11 +2,11 @@
 
 int main() {
     int n, m, i, j, k, pf = 0;
+    int hit, pos, far, next;
+    int page[50], fr[10];
 
     printf("Enter number of pages: ");
     scanf("%d", &n);
-
-    int page[n];
 
     printf("Enter reference string: ");
     for(i = 0; i < n; i++)
@@ -15,27 +15,25 @@ int main() {
     printf("Enter number of frames: ");
     scanf("%d", &m);
 
-    int fr[m];
-
-    for(i = 0; i < m; i++)
-        fr[i] = -1;
+    for(i = 0; i < m; i++){
+        fr[i] = -1;      
+    }
 
     for(i = 0; i < n; i++) {
+        hit = 0;
 
-        int found = 0;
-
+        // check hit
         for(j = 0; j < m; j++) {
             if(fr[j] == page[i]) {
-                found = 1;
+                hit = 1;
                 break;
             }
         }
 
-        if(found == 0) {
+        if(hit == 0) {
+            pos = -1;
 
-            int pos = -1;
-
-            // Empty frame check
+            // empty frame
             for(j = 0; j < m; j++) {
                 if(fr[j] == -1) {
                     pos = j;
@@ -43,24 +41,19 @@ int main() {
                 }
             }
 
-            // Optimal replacement
+            // optimal replace
             if(pos == -1) {
-
-                int far = -1;
-
+                far = -1;
                 for(j = 0; j < m; j++) {
-
-                    int next_use = 999;
-
+                    next = n + 1;
                     for(k = i + 1; k < n; k++) {
                         if(fr[j] == page[k]) {
-                            next_use = k;
+                            next = k;
                             break;
                         }
                     }
-
-                    if(next_use > far) {
-                        far = next_use;
+                    if(next > far) {
+                        far = next;
                         pos = j;
                     }
                 }
@@ -69,17 +62,14 @@ int main() {
             fr[pos] = page[i];
             pf++;
         }
-
-        for(j = 0; j < m; j++)
-            printf("%d\t", fr[j]);
-
+        for(j = 0; j < m; j++){
+                printf("%d\t", fr[j]);
+            }
         printf("\n");
     }
 
-    float rate = ((float)pf / n) * 100;
-
     printf("\nTotal Page Faults: %d\n", pf);
-    printf("Page Fault Rate: %.2f%%\n", rate);
+    printf("Page Fault Rate: %.2f%%\n", ((float)pf / n) * 100);
 
     return 0;
 }

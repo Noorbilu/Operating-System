@@ -2,64 +2,55 @@
 #include <stdlib.h>
 
 int main() {
-
-    int t[20], n, h, i, j, temp, total = 0, d, pos;
-    float avg;
-
+    int t[20], n, h, pos, total = 0, curr, i, j;
+    
     printf("Enter number of tracks: ");
     scanf("%d", &n);
-
+    
     printf("Enter track positions: ");
-    for(i = 0; i < n; i++) {
+    for(i = 0; i < n; i++) 
         scanf("%d", &t[i]);
-    }
-    printf("Enter head position: ");
+    
+    printf("Head position: ");
     scanf("%d", &h);
+    
     t[n] = h;
     n++;
+    
     // Sorting
-    for(i = 0; i < n; i++) {
-        for(j = i + 1; j < n; j++) {
-
+    for(i = 0; i < n; i++)
+        for(j = i+1; j < n; j++)
             if(t[i] > t[j]) {
-                temp = t[i];
+                int temp = t[i];
                 t[i] = t[j];
                 t[j] = temp;
             }
-        }
-    }
-    for(i = 0; i < n; i++) {
-        if(t[i] == h) {
-            pos = i;
-            break;
-        }
-    }
-    for(j = pos; j < n - 1; j++) {
-
-        d = abs(t[j + 1] - t[j]);
+    
+    // Head er position khuje ber kora
+    for(i = 0; i < n; i++)
+        if(t[i] == h) pos = i;
+    
+    curr = pos;
+    
+    printf("\nSCAN Movement:\n");
+    
+    // Right e jawa
+    for(i = pos + 1; i < n; i++) {
+        int d = abs(t[i] - t[curr]);
         total += d;
-
-        printf("%d -> %d \t Difference: %d\n",
-               t[j], t[j + 1], d);
+        printf("%d -> %d (diff %d)\n", t[curr], t[i], d);
+        curr = i;
     }
-    if(pos > 0) {
-
-        d = abs(t[n - 1] - t[pos - 1]);
+    
+    // Left e jawa
+    for(i = pos - 1; i >= 0; i--) {
+        int d = abs(t[curr] - t[i]);
         total += d;
-
-        printf("%d -> %d \t Difference: %d\n",
-               t[n - 1], t[pos - 1], d);
-
-        for(j = pos - 1; j > 0; j--) {
-            d = abs(t[j] - t[j - 1]);
-            total += d;
-
-            printf("%d -> %d \t Difference: %d\n",
-                   t[j], t[j - 1], d);
-        }
+        printf("%d -> %d (diff %d)\n", t[curr], t[i], d);
+        curr = i;
     }
-    avg = (float) total / (n - 1);
-    printf("Average head movements: %.2f\n", avg);
-
+    
+    printf("\nAverage head movement: %.2f\n", (float)total / (n-1));
+    
     return 0;
 }
